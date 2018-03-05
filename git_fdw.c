@@ -277,6 +277,8 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
   size_t refs_len, i;
   git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
 
+  git_libgit2_init();
+
   const char* git_search_path = getenv("GIT_SEARCH_PATH");
   if(git_search_path != NULL){
     git_libgit2_opts(
@@ -286,7 +288,10 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
     );
   }
 
-  git_libgit2_init();
+  ereport(ERROR,
+            (errcode(ERRCODE_SYNTAX_ERROR),
+             errmsg(git_search_path)));
+  return;
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
   festate->path   = repository_path;
