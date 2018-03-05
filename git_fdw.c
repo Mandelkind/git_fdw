@@ -277,6 +277,15 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
   size_t refs_len, i;
   git_remote_callbacks callbacks = GIT_REMOTE_CALLBACKS_INIT;
 
+  const char* git_search_path = getenv("GIT_SEARCH_PATH");
+  if(git_search_path != NULL){
+    git_libgit2_opts(
+      GIT_OPT_SET_SEARCH_PATH,
+      GIT_CONFIG_LEVEL_GLOBAL,
+      git_search_path
+    );
+  }
+
   git_libgit2_init();
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
