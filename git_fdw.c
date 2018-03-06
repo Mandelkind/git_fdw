@@ -288,9 +288,9 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
     );
   }
 
-  ereport(ERROR,
-            (errcode(ERRCODE_SYNTAX_ERROR),
-             errmsg(git_search_path)));
+  ereport(ERROR, (errcode(ERRCODE_FDW_ERROR),
+              errmsg("GIT_SEARCH_PATH"),
+              errdetail("GIT_SEARCH_PATH: %s", git_search_path)));
   return;
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
