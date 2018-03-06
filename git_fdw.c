@@ -279,7 +279,7 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
 
   git_libgit2_init();
 
-  const char* git_search_path = getenv("GIT_SEARCH_PATH");
+  char* git_search_path = getenv("GIT_SEARCH_PATH");
   if(git_search_path != NULL){
     git_libgit2_opts(
       GIT_OPT_SET_SEARCH_PATH,
