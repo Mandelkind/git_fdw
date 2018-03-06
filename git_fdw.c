@@ -290,7 +290,7 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
 */
   ereport(ERROR, (errcode(ERRCODE_FDW_ERROR),
               errmsg("GIT_SEARCH_PATH"),
-              errdetail("HOME: %s", getenv("HOME"))));
+              errdetail("HOME: %s", secure_getenv("HOME"))));
   return;
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
