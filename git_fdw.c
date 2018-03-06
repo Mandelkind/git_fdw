@@ -279,19 +279,19 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
 
   git_libgit2_init();
 
- /* char* git_search_path = getenv("GIT_SEARCH_PATH");
-  if(git_search_path != NULL){
+// char* git_search_path = getenv("GIT_SEARCH_PATH");
+//  if(git_search_path != NULL){
     git_libgit2_opts(
       GIT_OPT_SET_SEARCH_PATH,
       GIT_CONFIG_LEVEL_GLOBAL,
-      git_search_path
+      "/home/git"
     );
-  }
-*/
-  ereport(ERROR, (errcode(ERRCODE_FDW_ERROR),
+//  }
+
+/*  ereport(ERROR, (errcode(ERRCODE_FDW_ERROR),
               errmsg("GIT_SEARCH_PATH"),
               errdetail("HOME: %s", getenv("GIT_SEARCH_PATH"))));
-  return;
+  return; */
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
   festate->path   = repository_path;
