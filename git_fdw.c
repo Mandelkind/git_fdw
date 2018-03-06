@@ -279,7 +279,7 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
 
   git_libgit2_init();
 
- /* char* git_search_path = getenv("HOME");
+ /* char* git_search_path = getenv("GIT_SEARCH_PATH");
   if(git_search_path != NULL){
     git_libgit2_opts(
       GIT_OPT_SET_SEARCH_PATH,
@@ -290,7 +290,7 @@ static void gitBeginForeignScan(ForeignScanState *node, int eflags) {
 */
   ereport(ERROR, (errcode(ERRCODE_FDW_ERROR),
               errmsg("GIT_SEARCH_PATH"),
-              errdetail("HOME: %s", getenv("POSTGRESQL_VERSION"))));
+              errdetail("HOME: %s", getenv("GIT_SEARCH_PATH"))));
   return;
 
   festate = (GitFdwExecutionState *) palloc(sizeof(GitFdwExecutionState));
